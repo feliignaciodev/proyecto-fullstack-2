@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
-  const DEBUG = true; // Set to false to allow real submits
-  console.log('main.js cargado — DEBUG=', DEBUG);
+  const USERS_KEY = 'poleraExpressUsuarios';
+  const SESSION_KEY = 'poleraExpressSesion';
 
   // Helpers
   function validateEmail(email) {
@@ -13,7 +13,6 @@ document.addEventListener('DOMContentLoaded', () => {
     el.className = 'error-message';
     el.textContent = message;
     input.insertAdjacentElement('afterend', el);
-    console.warn('Validation error on', input.id || input.name, message);
   }
 
   function clearError(input) {
@@ -23,7 +22,19 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // Login validation
+  function getUsuarios() {
+    try {
+      return JSON.parse(localStorage.getItem(USERS_KEY)) || [];
+    } catch {
+      return [];
+    }
+  }
+
+  function guardarUsuarios(usuarios) {
+    localStorage.setItem(USERS_KEY, JSON.stringify(usuarios));
+  }
+
+  // Iniciar sesión
   const formLogin = document.querySelector('#formLogin');
   if (formLogin) {
     formLogin.addEventListener('submit', (e) => {
@@ -32,8 +43,6 @@ document.addEventListener('DOMContentLoaded', () => {
       const password = formLogin.querySelector('#password');
       let firstError = null;
       let valid = true;
-
-      console.log('Intento de submit (login)', { correo: correo.value.trim(), passwordLength: password.value.length });
 
       clearError(correo);
       clearError(password);
@@ -50,21 +59,26 @@ document.addEventListener('DOMContentLoaded', () => {
         firstError = firstError || password;
       }
 
-      if (valid) {
-        const payload = { correo: correo.value.trim(), passwordLength: password.value.length };
-        if (DEBUG) {
-          console.log('Login válido — DEBUG previene envío. Datos:', payload);
-        } else {
-          console.log('Login válido — enviando', payload);
-          formLogin.submit();
-        }
-      } else if (firstError) {
-        firstError.focus();
+      if (!valid) {
+        if (firstError) firstError.focus();
+        return;
       }
+
+      const usuarios = getUsuarios();
+      const usuario = usuarios.find(u => u.correo.toLowerCase() === correo.value.trim().toLowerCase());
+
+      if (!usuario || usuario.password !== password.value) {
+        showError(password, 'Correo o contraseña incorrectos.');
+        password.focus();
+        return;
+      }
+
+      localStorage.setItem(SESSION_KEY, JSON.stringify({ nombre: usuario.nombre, correo: usuario.correo }));
+      window.location.href = 'index.html';
     });
   }
 
-  // Register validation
+  // Registrarse
   const formRegister = document.querySelector('#formRegister');
   if (formRegister) {
     formRegister.addEventListener('submit', (e) => {
@@ -75,8 +89,6 @@ document.addEventListener('DOMContentLoaded', () => {
       const confirmar = formRegister.querySelector('#confirmar');
       let firstError = null;
       let valid = true;
-
-      console.log('Intento de submit (registro)', { nombre: nombre.value.trim(), correo: correo.value.trim(), passwordLength: password.value.length });
 
       [nombre, correo, password, confirmar].forEach(clearError);
 
@@ -104,17 +116,24 @@ document.addEventListener('DOMContentLoaded', () => {
         firstError = firstError || confirmar;
       }
 
-      if (valid) {
-        const payload = { nombre: nombre.value.trim(), correo: correo.value.trim(), passwordLength: password.value.length };
-        if (DEBUG) {
-          console.log('Registro válido — DEBUG previene envío. Datos:', payload);
-        } else {
-          console.log('Registro válido — enviando', payload);
-          formRegister.submit();
-        }
-      } else if (firstError) {
-        firstError.focus();
+      if (!valid) {
+        if (firstError) firstError.focus();
+        return;
       }
+
+      const usuarios = getUsuarios();
+      const yaExiste = usuarios.some(u => u.correo.toLowerCase() === correo.value.trim().toLowerCase());
+
+      if (yaExiste) {
+        showError(correo, 'Ya existe una cuenta con este correo.');
+        correo.focus();
+        return;
+      }
+
+      usuarios.push({ nombre: nombre.value.trim(), correo: correo.value.trim(), password: password.value });
+      guardarUsuarios(usuarios);
+
+      window.location.href = 'login.html';
     });
   }
 });

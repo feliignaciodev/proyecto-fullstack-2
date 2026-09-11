@@ -1,6 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-  const DEBUG = true; // Set to false to allow real submits
-  console.log('main.js cargado — DEBUG=', DEBUG);
+  // main.js cargado
 
   // Helpers
   function validateEmail(email) {
@@ -13,7 +12,6 @@ document.addEventListener('DOMContentLoaded', () => {
     el.className = 'error-message';
     el.textContent = message;
     input.insertAdjacentElement('afterend', el);
-    console.warn('Validation error on', input.id || input.name, message);
   }
 
   function clearError(input) {
@@ -33,7 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
       let firstError = null;
       let valid = true;
 
-      console.log('Intento de submit (login)', { correo: correo.value.trim(), passwordLength: password.value.length });
+      // intento de submit (login)
 
       clearError(correo);
       clearError(password);
@@ -51,13 +49,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       if (valid) {
-        const payload = { correo: correo.value.trim(), passwordLength: password.value.length };
-        if (DEBUG) {
-          console.log('Login válido — DEBUG previene envío. Datos:', payload);
-        } else {
-          console.log('Login válido — enviando', payload);
-          formLogin.submit();
-        }
+        formLogin.submit();
       } else if (firstError) {
         firstError.focus();
       }
@@ -76,7 +68,7 @@ document.addEventListener('DOMContentLoaded', () => {
       let firstError = null;
       let valid = true;
 
-      console.log('Intento de submit (registro)', { nombre: nombre.value.trim(), correo: correo.value.trim(), passwordLength: password.value.length });
+      // intento de submit (registro)
 
       [nombre, correo, password, confirmar].forEach(clearError);
 
@@ -105,13 +97,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       if (valid) {
-        const payload = { nombre: nombre.value.trim(), correo: correo.value.trim(), passwordLength: password.value.length };
-        if (DEBUG) {
-          console.log('Registro válido — DEBUG previene envío. Datos:', payload);
-        } else {
-          console.log('Registro válido — enviando', payload);
-          formRegister.submit();
-        }
+        formRegister.submit();
       } else if (firstError) {
         firstError.focus();
       }

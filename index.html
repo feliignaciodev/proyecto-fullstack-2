@@ -1,11 +1,106 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pagina principal</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Poleras Express | Poleras personalizadas en 48 horas</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    
+
+  <header>
+    <nav class="navbar navbar-expand-lg navbar-tienda">
+      <div class="container">
+        <a class="marca" href="index.html">Poleras <span>Express</span></a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu" aria-label="Abrir menú">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-end" id="menu">
+          <ul class="navbar-nav">
+            <li class="nav-item"><a class="nav-link activo" href="index.html">Inicio</a></li>
+            <li class="nav-item"><a class="nav-link" href="#productos">Productos</a></li>
+            <li class="nav-item"><a class="nav-link" href="login.html">Iniciar sesión</a></li>
+            <li class="nav-item"><a class="nav-link" href="registro.html">Crear cuenta</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <!-- Portada -->
+    <section class="portada">
+      <div class="container">
+        <div class="col-lg-7">
+          <p class="dato-entrega">Despacho en 48 horas a todo Chile</p>
+          <h1>Tu diseño, estampado y en tus manos esta semana.</h1>
+          <p class="bajada">Subes tu imagen, elegimos la tinta y estampamos sobre algodón peinado. Desde una polera hasta el pedido completo del curso.</p>
+          <a class="btn btn-tinta" href="#productos">Ver el catálogo</a>
+          <a class="btn btn-contorno" href="registro.html">Crear cuenta</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Catálogo -->
+    <section class="seccion" id="productos">
+      <div class="container">
+        <h2>Catálogo</h2>
+        <p class="intro">Tres bases de algodón, todas personalizables por delante y por detrás.</p>
+
+        <div class="row g-4">
+          <div class="col-md-4">
+            <article class="tarjeta-producto">
+              <img src="img/poleraHombre.png" alt="Polera negra de hombre cuello redondo">
+              <div class="cuerpo">
+                <h3>Polera de Jujutsu Kaisen!!!</h3>
+                <p>Algodón peinado 180 g. La base que mejor levanta los colores fuertes.</p>
+                <span class="precio">$16.990</span>
+                <a class="btn btn-contorno" href="registro.html">Comprar</a>
+              </div>
+            </article>
+          </div>
+
+          <div class="col-md-4">
+            <article class="tarjeta-producto">
+              <img src="img/poleraAcidNew.png" alt="Polera acid wash desgastada">
+              <div class="cuerpo">
+                <h3>Negra premium</h3>
+                <p>Tela más densa y tinta plastisol, pensada para diseños de una sola figura.</p>
+                <span class="precio">$14.990</span>
+                <a class="btn btn-contorno" href="registro.html">Comprar</a>
+              </div>
+            </article>
+          </div>
+
+          <div class="col-md-4">
+            <article class="tarjeta-producto">
+              <img src="img/poleraOversize.png" alt="Polera oversize con estampado">
+              <div class="cuerpo">
+                <h3>Pack curso</h3>
+                <p>Desde 10 unidades con el mismo diseño y nombre impreso en la espalda.</p>
+                <span class="precio">$9.990</span>
+                <a class="btn btn-contorno" href="registro.html">Comprar</a>
+              </div>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="pie">
+    <div class="container">
+      <h2>Poleras Express</h2>
+      <p>Poleras personalizadas con tu diseño, listas en 48 horas.</p>
+      <nav>
+        <a href="index.html">Inicio</a>
+        <a href="login.html">Iniciar sesión</a>
+        <a href="registro.html">Crear cuenta</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
